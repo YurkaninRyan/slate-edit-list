@@ -169,7 +169,8 @@ function joinAdjacentLists(opts) {
                     first = _pair[0],
                     second = _pair[1];
 
-                second.nodes.forEach(function (secondNode, index) {
+                var updatedSecond = change.state.document.getDescendant(second.key);
+                updatedSecond.nodes.forEach(function (secondNode, index) {
                     change.insertNodeByKey(first.key, first.nodes.size + index, secondNode);
                 });
 

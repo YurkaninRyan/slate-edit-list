@@ -36,7 +36,7 @@ function decreaseItemDepth(opts, change, ordered) {
 
     // True if the currentItem and the followingItems make the whole
     // currentList, and hence the currentList will be emptied
-    var willEmptyCurrentList = currentList.nodes.count() === followingItems.count() + 1;
+    var willEmptyCurrentList = currentList.nodes.size === followingItems.size + 1;
 
     if (!followingItems.isEmpty()) {
         (function () {
@@ -49,15 +49,21 @@ function decreaseItemDepth(opts, change, ordered) {
             // Add the sublist
             change.insertNodeByKey(currentItem.key, currentItem.nodes.size, sublist, { normalize: false });
 
-            // Move the followingItems to the sublist
-            followingItems.forEach(function (item) {
-                return change.moveNodeByKey(item.key, sublist.key, sublist.nodes.ize, { normalize: false });
-            });
-        })();
-    }
+            change.moveNodeByKey(currentItem.key, parentList.key, parentList.nodes.indexOf(parentItem) + 1);
 
-    // Move the item after parent item and normalize
-    change.moveNodeByKey(currentItem.key, parentList.key, parentList.nodes.indexOf(parentItem) + 1);
+            // Creating a block now adds a text node.  Lets get rid of it.
+            var extraEmptyText = sublist.nodes.get(0);
+
+            // Move the followingItems to the sublist
+            followingItems.forEach(function (item, index) {
+                return change.moveNodeByKey(item.key, sublist.key, sublist.nodes.size + index, { normalize: false });
+            });
+
+            change.removeNodeByKey(extraEmptyText.key);
+        })();
+    } else {
+        change.moveNodeByKey(currentItem.key, parentList.key, parentList.nodes.indexOf(parentItem) + 1);
+    }
 
     // Remove the currentList completely if needed
     if (willEmptyCurrentList) {

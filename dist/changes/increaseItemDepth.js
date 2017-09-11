@@ -41,14 +41,14 @@ function increaseItemDepth(opts, change) {
  */
 function moveAsSubItem(opts, change, item, destKey) {
     var destination = change.state.document.getDescendant(destKey);
-    var lastIndex = destination.nodes.count();
+    var lastIndex = destination.nodes.size;
     var lastChild = destination.nodes.last();
 
     // The potential existing last child list
     var existingList = isList(opts, lastChild) ? lastChild : null;
 
     if (existingList) {
-        return change.moveNodeByKey(item.key, existingList.key, existingList.nodes.count() // as last item
+        return change.moveNodeByKey(item.key, existingList.key, existingList.nodes.size // as last item
         );
     } else {
         var currentList = getListForItem(opts, change.state, destination);
