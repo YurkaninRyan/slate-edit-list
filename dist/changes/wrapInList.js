@@ -27,7 +27,7 @@ function wrapInList(opts, change, ordered, data) {
         data: Slate.Data.create(data)
     }, { normalize: false });
 
-    var updatedList = change.state.document.getFurthestAncestor(selectedBlocks[0].key);
+    var updatedList = change.state.document.getFurthestAncestor(selectedBlocks.get(0).key);
     if (opts.types.includes(updatedList.type) && updatedList.nodes.size === 1 && opts.types.includes(updatedList.nodes.get(0).type)) {
         change.unwrapBlock(updatedList.type, { normalize: false });
     }
