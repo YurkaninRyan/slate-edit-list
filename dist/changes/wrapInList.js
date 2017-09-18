@@ -28,8 +28,10 @@ function wrapInList(opts, change, ordered, data) {
 
     change.insertBlock(wrapper);
     selectedBlocks.forEach(function (block) {
-        return change.removeNodeByKey(block.key);
+        if (!change.state.document.getDescendant(block.key)) return;
+        change.removeNodeByKey(block.key);
     });
+
     selectedBlocks.forEach(function (block, index) {
         return change.insertNodeByKey(wrapper.key, index, block);
     });
