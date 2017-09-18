@@ -25,7 +25,12 @@ function wrapInList(opts, change, ordered, data) {
     change.wrapBlock({
         type: type,
         data: Slate.Data.create(data)
-    });
+    }, { normalize: false });
+
+    var updatedList = change.state.document.getFurthestAncestor(selectedBlocks[0].key);
+    if (opts.types.includes(updatedList.type) && updatedList.nodes.size === 1 && opts.types.includes(updatedList.nodes.get(0).type)) {
+        change.unwrapBlock(updatedList.type, { normalize: false });
+    }
 
     // Wrap in list items
     selectedBlocks.forEach(function (node) {
@@ -33,10 +38,10 @@ function wrapInList(opts, change, ordered, data) {
             // Merge its items with the created list
             node.nodes.forEach(function (_ref) {
                 var key = _ref.key;
-                return change.unwrapNodeByKey(key);
+                return change.unwrapNodeByKey(key, { normalize: false });
             });
         } else {
-            change.wrapBlockByKey(node.key, opts.typeItem);
+            change.wrapBlockByKey(node.key, opts.typeItem, { normalize: false });
         }
     });
 
