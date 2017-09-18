@@ -49,22 +49,9 @@ function wrapInList(opts, change, ordered, data) {
  * current selection
  */
 function getHighestSelectedBlocks(state) {
-    var range = state.selection;
-    var document = state.document;
-
-
-    var startBlock = document.getClosestBlock(range.startKey);
-    var endBlock = document.getClosestBlock(range.endKey);
-
-    if (startBlock === endBlock) {
-        return List([startBlock]);
-    } else {
-        var ancestor = document.getCommonAncestor(startBlock.key, endBlock.key);
-        var startPath = ancestor.getPath(startBlock.key);
-        var endPath = ancestor.getPath(endBlock.key);
-
-        return ancestor.nodes.slice(startPath[0], endPath[0] + 1);
-    }
+    return List(new Set(state.blocks.map(function (block) {
+        return state.document.getFurthestAncestor(block.key);
+    })));
 }
 
 module.exports = wrapInList;
