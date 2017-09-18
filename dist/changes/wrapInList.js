@@ -33,7 +33,7 @@ function wrapInList(opts, change, ordered, data) {
     });
 
     selectedBlocks.forEach(function (block, index) {
-        return change.insertNodeByKey(wrapper.key, index, block);
+        return change.insertNodeByKey(wrapper.key, index, block, { normalize: false });
     });
 
     // Wrap in list items
@@ -46,6 +46,9 @@ function wrapInList(opts, change, ordered, data) {
                 return change.unwrapNodeByKey(key);
             });
         } else {
+            if (node.kind === 'text') {
+                return change.removeNodeByKey(node.key);
+            }
             change.wrapBlockByKey(node.key, opts.typeItem);
         }
     });
