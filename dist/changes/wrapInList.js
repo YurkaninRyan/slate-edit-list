@@ -28,11 +28,11 @@ function wrapInList(opts, change, ordered, data) {
 
     change.insertBlock(wrapper);
     selectedBlocks.forEach(function (block, index) {
-        return change.insertNodeByKey(block.key, index, wrapper);
+        return change.moveNodeByKey(block.key, wrapper.key, index);
     });
 
     // Wrap in list items
-    selectedBlocks.forEach(function (node) {
+    wrapper.nodes.forEach(function (node) {
         if (isList(opts, node)) {
             // Merge its items with the created list
             node.nodes.forEach(function (_ref) {
