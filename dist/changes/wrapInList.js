@@ -26,7 +26,10 @@ function wrapInList(opts, change, ordered, data) {
         data: Slate.Data.create(data)
     });
 
-    change.insertBlock(wrapper, { normalize: false });
+    var topLevelIndex = change.state.document.nodes.findIndex(function (node) {
+        return node.key === selectedBlocks.get(0).key;
+    });
+    change.insertNodeByKey(change.state.document.key, topLevelIndex, wrapper, { normalize: false });
     selectedBlocks.forEach(function (block) {
         if (!change.state.document.getDescendant(block.key)) return;
         change.removeNodeByKey(block.key, { normalize: false });
