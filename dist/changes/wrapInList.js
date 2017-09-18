@@ -28,7 +28,7 @@ function wrapInList(opts, change, ordered, data) {
 
     change.insertBlock(wrapper);
     selectedBlocks.forEach(function (block, index) {
-        return change.insertNodeByKey(block.key, index, wrapper.key);
+        return change.insertNodeByKey(block.key, index, wrapper);
     });
 
     // Wrap in list items
