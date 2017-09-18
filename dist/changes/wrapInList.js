@@ -33,7 +33,7 @@ function wrapInList(opts, change, ordered, data) {
     });
 
     selectedBlocks.forEach(function (block, index) {
-        return change.insertNodeByKey(wrapper.key, index, block, { normalize: false });
+        return change.insertNodeByKey(wrapper.key, index, block);
     });
 
     // Wrap in list items
