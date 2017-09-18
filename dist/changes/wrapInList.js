@@ -37,6 +37,7 @@ function wrapInList(opts, change, ordered, data) {
     });
 
     // Wrap in list items
+    wrapper = change.state.document.getDescendant(wrapper.key);
     wrapper.nodes.forEach(function (node) {
         if (isList(opts, node)) {
             // Merge its items with the created list
