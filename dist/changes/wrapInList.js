@@ -27,8 +27,11 @@ function wrapInList(opts, change, ordered, data) {
     });
 
     change.insertBlock(wrapper);
+    selectedBlocks.forEach(function (block) {
+        return change.removeNodeByKey(block.key);
+    });
     selectedBlocks.forEach(function (block, index) {
-        return change.moveNodeByKey(block.key, wrapper.key, index);
+        return change.insertNodeByKey(wrapper.key, index, block);
     });
 
     // Wrap in list items
@@ -37,10 +40,10 @@ function wrapInList(opts, change, ordered, data) {
             // Merge its items with the created list
             node.nodes.forEach(function (_ref) {
                 var key = _ref.key;
-                return change.unwrapNodeByKey(key, { normalize: false });
+                return change.unwrapNodeByKey(key);
             });
         } else {
-            change.wrapBlockByKey(node.key, opts.typeItem, { normalize: false });
+            change.wrapBlockByKey(node.key, opts.typeItem);
         }
     });
 
