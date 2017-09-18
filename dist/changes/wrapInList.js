@@ -21,16 +21,15 @@ function wrapInList(opts, change, ordered, data) {
     var selectedBlocks = getHighestSelectedBlocks(change.state);
     var type = ordered || opts.types[0];
 
-    // Wrap in container
-    change.wrapBlock({
+    var wrapper = Slate.Block.create({
         type: type,
         data: Slate.Data.create(data)
-    }, { normalize: false });
+    });
 
-    var updatedList = change.state.document.getFurthestAncestor(selectedBlocks.get(0).key);
-    if (opts.types.includes(updatedList.type) && updatedList.nodes.size === 1 && opts.types.includes(updatedList.nodes.get(0).type)) {
-        change.unwrapBlock(updatedList.type, { normalize: false });
-    }
+    change.insertBlock(wrapper);
+    selectedBlocks.forEach(function (block, index) {
+        return change.insertNodeByKey(block.key, index, wrapper.key);
+    });
 
     // Wrap in list items
     selectedBlocks.forEach(function (node) {
