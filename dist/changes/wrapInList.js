@@ -26,14 +26,14 @@ function wrapInList(opts, change, ordered, data) {
         data: Slate.Data.create(data)
     });
 
-    change.insertBlock(wrapper);
+    change.insertBlock(wrapper, { normalize: false });
     selectedBlocks.forEach(function (block) {
         if (!change.state.document.getDescendant(block.key)) return;
-        change.removeNodeByKey(block.key);
+        change.removeNodeByKey(block.key, { normalize: false });
     });
 
     selectedBlocks.forEach(function (block, index) {
-        return change.insertNodeByKey(wrapper.key, index, block);
+        return change.insertNodeByKey(wrapper.key, index, block, { normalize: false });
     });
 
     // Wrap in list items
