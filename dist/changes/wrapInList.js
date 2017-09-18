@@ -47,6 +47,9 @@ function wrapInList(opts, change, ordered, data) {
             });
         } else {
             if (node.kind === 'text') {
+                if (!change.state.document.getDescendant(node.key)) {
+                    return;
+                }
                 return change.removeTextByKey(node.key);
             }
             change.wrapBlockByKey(node.key, opts.typeItem);
