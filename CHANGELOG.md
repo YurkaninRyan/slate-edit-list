@@ -40,7 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - Added `utils.getItemsAtRange`
 - `wrapInList` now wraps the selected blocks in distinct items (not a big, single one)
-- `unwrapList` now unwraps all the selected items. Ignores complex ranges that span outside of lists.
+- `unwrapList` now unwraps all the selected items. Ignores complex leaves that span outside of lists.
 
 ## 0.5.7 - 2016-02-13
 
