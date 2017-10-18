@@ -3,10 +3,11 @@ const expect = require('expect');
 module.exports = function(plugin, change) {
     const ret = plugin.onKeyDown(
         {
+            key: 'Enter',
+            shiftKey: true,
             preventDefault: () => {},
             stopPropagation: () => {}
         },
-        { key: 'enter', isShift: true },
         change
     );
 

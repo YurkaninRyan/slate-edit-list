@@ -22,9 +22,9 @@ var getCurrentList = require('./getCurrentList');
 var getItemsAtRange = require('./getItemsAtRange');
 var getPreviousItem = require('./getPreviousItem');
 
-var KEY_ENTER = 'enter';
-var KEY_TAB = 'tab';
-var KEY_BACKSPACE = 'backspace';
+var KEY_ENTER = 'Enter';
+var KEY_TAB = 'Tab';
+var KEY_BACKSPACE = 'B\ackspace';
 
 /**
  * A Slate plugin to handle keyboard events in lists.
@@ -60,11 +60,11 @@ function EditList() {
     /**
      * User is pressing a key in the editor
      */
-    function onKeyDown(e, data, change) {
+    function onKeyDown(event, change) {
         // Build arguments list
-        var args = [e, data, change, opts];
+        var args = [event, change, opts];
 
-        switch (data.key) {
+        switch (event.key) {
             case KEY_ENTER:
                 return onEnter.apply(undefined, args);
             case KEY_TAB:

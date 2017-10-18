@@ -9,7 +9,7 @@ var getCurrentItem = require('./getCurrentItem');
  * Tab       -> Increase item depth if inside a list item
  * Shift+Tab -> Decrease item depth if inside a list item
  */
-function onTab(event, data, change, opts) {
+function onTab(event, change, opts) {
     var state = change.state;
     var isCollapsed = state.isCollapsed;
 
@@ -19,7 +19,7 @@ function onTab(event, data, change, opts) {
     }
 
     // Shift+tab reduce depth
-    if (data.isShift) {
+    if (event.shiftKey) {
         event.preventDefault();
 
         return decreaseItemDepth(opts, change);

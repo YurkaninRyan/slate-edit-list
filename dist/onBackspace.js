@@ -6,7 +6,7 @@ var getCurrentItem = require('./getCurrentItem');
 /**
  * User pressed Delete in an editor
  */
-function onBackspace(event, data, change, opts) {
+function onBackspace(event, change, opts) {
     var state = change.state;
     var startOffset = state.startOffset,
         selection = state.selection;
