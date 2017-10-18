@@ -47,7 +47,7 @@ function decreaseItemDepth(opts, change, ordered) {
                 data: currentList.data
             });
             // Add the sublist
-            change.insertNodeByKey(currentItem.key, currentItem.nodes.size, sublist, { normalize: false });
+            change.insertNodeByKey(currentItem.key, currentItem.nodes.size, sublist);
 
             change.moveNodeByKey(currentItem.key, parentList.key, parentList.nodes.indexOf(parentItem) + 1);
 
@@ -56,10 +56,12 @@ function decreaseItemDepth(opts, change, ordered) {
 
             // Move the followingItems to the sublist
             followingItems.forEach(function (item, index) {
-                return change.moveNodeByKey(item.key, sublist.key, sublist.nodes.size + index, { normalize: false });
+                return change.moveNodeByKey(item.key, sublist.key, sublist.nodes.size + index);
             });
 
-            change.removeNodeByKey(extraEmptyText.key);
+            if (extraEmptyText) {
+                change.removeNodeByKey(extraEmptyText.key);
+            }
         })();
     } else {
         change.moveNodeByKey(currentItem.key, parentList.key, parentList.nodes.indexOf(parentItem) + 1);
