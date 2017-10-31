@@ -13,9 +13,10 @@ function splitListItem(opts, change) {
   var state = change.state;
 
   var currentItem = getCurrentItem(opts, state);
-  var focusTextParent = change.state.document.getParent(change.state.focusText.key);
-  var splitOffset = focusTextParent.getOffsetAtRange(state.selection.collapseToStart());
-  return change.splitDescendantsByKey(currentItem.key, state.focusText.key, splitOffset);
+
+  if (change.state.selection.isExpanded) change.delete();
+
+  return change.splitDescendantsByKey(currentItem.key, state.focusText.key, change.state.selection.anchorOffset);
 }
 
 module.exports = splitListItem;
