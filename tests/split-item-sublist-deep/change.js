@@ -1,18 +1,17 @@
-const expect = require('expect');
+import expect from 'expect';
 
-module.exports = function(plugin, change) {
-    const { state } = change;
-    const selectedBlock = state.document.getDescendant('_selection_key');
+export default function(plugin, change) {
+    const { value } = change;
+    const selectedBlock = value.document.getDescendant('_selection_key');
 
-    change.collapseToStartOf(selectedBlock)
-          .move(2); // It|em 1
+    change.collapseToStartOf(selectedBlock).move(2); // It|em 1
 
     plugin.changes.splitListItem(change);
 
     // check new selection
-    const selectedNode = change.state.document.getTexts().get(2);
+    const selectedNode = change.value.document.getTexts().get(2);
 
-    expect(change.state.selection.toJS()).toEqual({
+    expect(change.value.selection.toJS()).toEqual({
         anchorKey: selectedNode.key,
         anchorOffset: 0,
         focusKey: selectedNode.key,
@@ -24,4 +23,4 @@ module.exports = function(plugin, change) {
     });
 
     return change;
-};
+}

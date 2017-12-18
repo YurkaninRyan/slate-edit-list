@@ -1,15 +1,18 @@
-const expect = require('expect');
+import expect from 'expect';
 
-module.exports = function(plugin, change) {
+export default function(plugin, change) {
     const ret = plugin.onKeyDown(
         {
             key: 'Enter',
             shiftKey: true,
             preventDefault: () => {},
-            stopPropagation: () => {}
+            stopPropagation: () => {},
+            key: 'Enter',
+            shiftKey: true
         },
-        change
+        change,
+        {}
     );
 
-    expect(ret === null).toBe(true);
-};
+    expect(ret == null).toBe(true);
+}

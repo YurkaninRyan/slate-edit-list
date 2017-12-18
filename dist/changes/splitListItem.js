@@ -1,20 +1,27 @@
 'use strict';
 
-var getCurrentItem = require('../getCurrentItem');
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+require('slate');
+
+var _utils = require('../utils');
 
 /**
- * Split a list item.
- *
- * @param  {Object} opts
- * @param  {Slate.Change} change
- * @return {Slate.Change}
+ * Split a list item at the start of the current range.
  */
 function splitListItem(opts, change) {
-  var state = change.state;
+    var value = change.value;
 
-  var currentItem = getCurrentItem(opts, state);
-  var splitOffset = currentItem.getOffsetAtRange(state.selection.collapseToStart());
-  return change.splitDescendantsByKey(currentItem.key, state.focusText.key, splitOffset);
+    var currentItem = (0, _utils.getCurrentItem)(opts, value);
+    if (!currentItem) {
+        return change;
+    }
+
+    var splitOffset = value.startOffset;
+
+    return change.splitDescendantsByKey(currentItem.key, value.startKey, splitOffset);
 }
 
-module.exports = splitListItem;
+exports.default = splitListItem;

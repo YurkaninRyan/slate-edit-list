@@ -1,68 +1,70 @@
 'use strict';
 
-var Slate = require('slate');
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-var getPreviousItem = require('../getPreviousItem');
-var getCurrentItem = require('../getCurrentItem');
-var getListForItem = require('../getListForItem');
-var isList = require('../isList');
+var _slate = require('slate');
+
+var _utils = require('../utils');
 
 /**
  * Increase the depth of the current item by putting it in a sub-list
  * of previous item.
  * For first items in a list, does nothing.
- *
- * @param  {PluginOptions} opts
- * @param  {Slate.Change} change
- * @return {Slate.Change}
  */
 function increaseItemDepth(opts, change) {
-    var previousItem = getPreviousItem(opts, change.state);
+    var previousItem = (0, _utils.getPreviousItem)(opts, change.value);
+    var currentItem = (0, _utils.getCurrentItem)(opts, change.value);
 
     if (!previousItem) {
         return change;
     }
 
-    var currentItem = getCurrentItem(opts, change.state);
+    if (!currentItem) {
+        return change;
+    }
 
     // Move the item in the sublist of previous item
     return moveAsSubItem(opts, change, currentItem, previousItem.key);
 }
 
 /**
- * Move the given item to the list at the end of destination node,
- * creating one if needed.
- *
- * @param {PluginOptions} opts
- * @param {Slate.Change} change
- * @param {Slate.Block} item The list item to add
- * @param {String} destKey The key of the destination node
- * @return {Slate.Change}
+ * Move the given item to the sublist at the end of destination item,
+ * creating a sublist if needed.
  */
-function moveAsSubItem(opts, change, item, destKey) {
-    var destination = change.state.document.getDescendant(destKey);
+function moveAsSubItem(opts, change,
+// The list item to add
+item,
+// The key of the destination node
+destKey) {
+    var destination = change.value.document.getDescendant(destKey);
     var lastIndex = destination.nodes.size;
     var lastChild = destination.nodes.last();
 
     // The potential existing last child list
-    var existingList = isList(opts, lastChild) ? lastChild : null;
+    var existingList = (0, _utils.isList)(opts, lastChild) ? lastChild : null;
 
     if (existingList) {
         return change.moveNodeByKey(item.key, existingList.key, existingList.nodes.size // as last item
         );
-    } else {
-        var currentList = getListForItem(opts, change.state, destination);
-
-        var newSublist = Slate.Block.create({
-            kind: 'block',
-            type: currentList.type,
-            data: currentList.data
-        });
-
-        change.insertNodeByKey(destKey, lastIndex, newSublist);
-
-        return change.moveNodeByKey(item.key, newSublist.key, 0);
     }
+    var currentList = (0, _utils.getListForItem)(opts, change.value, destination);
+    if (!currentList) {
+        throw new Error('Destination is not in a list');
+    }
+
+    var newSublist = _slate.Block.create({
+        kind: 'block',
+        type: currentList.type,
+        data: currentList.data
+    });
+
+    change.insertNodeByKey(destKey, lastIndex, newSublist, {
+        normalize: false
+    });
+
+    return change.moveNodeByKey(item.key, newSublist.key, 0);
 }
 
-module.exports = increaseItemDepth;
+exports.default = increaseItemDepth;

@@ -23,6 +23,6 @@ document:
 selection:
   anchorKey: 'start'
   anchorOffset: 2
-  focusKey: 'end'
+  focusKey: 'start'
   focusOffset: 4
   isFocused: true

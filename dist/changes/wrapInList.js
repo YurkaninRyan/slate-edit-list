@@ -1,30 +1,28 @@
 'use strict';
 
-var Slate = require('slate');
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-var _require = require('immutable'),
-    List = _require.List;
+var _slate = require('slate');
 
-var isList = require('../isList');
+var _immutable = require('immutable');
+
+var _utils = require('../utils');
 
 /**
  * Wrap the blocks in the current selection in a new list. Selected
  * lists are merged together.
- *
- * @param  {PluginOptions} opts
- * @param  {Slate.Change}
- * @param  {String?} type
- * @param  {Object|Data?} [data]
- * @return {Change}
  */
-function wrapInList(opts, change, ordered, data) {
-    var selectedBlocks = getHighestSelectedBlocks(change.state);
-    var type = ordered || opts.types[0];
+function wrapInList(opts, change, type, data) {
+    var selectedBlocks = getHighestSelectedBlocks(change.value);
+    type = type || opts.types[0];
 
-    var wrapper = Slate.Block.create({
+    // Wrap in container
+    change.wrapBlock({
         type: type,
-        data: Slate.Data.create(data)
-    });
+        data: _slate.Data.create(data)
+    }, { normalize: false });
 
     var topLevelIndex = change.state.document.nodes.findIndex(function (node) {
         return node.key === selectedBlocks.get(0).key;
@@ -40,22 +38,17 @@ function wrapInList(opts, change, ordered, data) {
     });
 
     // Wrap in list items
-    wrapper = change.state.document.getDescendant(wrapper.key);
-    wrapper.nodes.forEach(function (node) {
-        if (isList(opts, node)) {
+    selectedBlocks.forEach(function (node) {
+        if ((0, _utils.isList)(opts, node)) {
             // Merge its items with the created list
             node.nodes.forEach(function (_ref) {
                 var key = _ref.key;
-                return change.unwrapNodeByKey(key);
+                return change.unwrapNodeByKey(key, { normalize: false });
             });
         } else {
-            if (node.kind === 'text') {
-                if (!change.state.document.getDescendant(node.key)) {
-                    return;
-                }
-                return change.removeTextByKey(node.key);
-            }
-            change.wrapBlockByKey(node.key, opts.typeItem);
+            change.wrapBlockByKey(node.key, opts.typeItem, {
+                normalize: false
+            });
         }
     });
 
@@ -63,14 +56,13 @@ function wrapInList(opts, change, ordered, data) {
 }
 
 /**
- * @param  {Slate.State} state
- * @return {List<Block>} The highest list of blocks that cover the
- * current selection
+ * Returns the highest list of blocks that cover the current selection
  */
-function getHighestSelectedBlocks(state) {
-    return List(new Set(state.blocks.map(function (block) {
-        return state.document.getFurthestAncestor(block.key);
+
+function getHighestSelectedBlocks(value) {
+    return (0, _immutable.List)(new Set(value.blocks.map(function (block) {
+        return value.document.getFurthestAncestor(block.key);
     })));
 }
 
-module.exports = wrapInList;
+exports.default = wrapInList;

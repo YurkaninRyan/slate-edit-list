@@ -1,8 +1,8 @@
 // const expect = require('expect');
 
-module.exports = function(plugin, change) {
-    const { state } = change;
-    const { selection } = state;
+export default function(plugin, change) {
+    const { value } = change;
+    const { selection } = value;
 
     const range = selection.merge({
         anchorKey: '_selection_key',
@@ -11,14 +11,15 @@ module.exports = function(plugin, change) {
         focusOffset: 2
     });
 
-    change.select(range)
-         .call(plugin.changes.splitListItem)
-         .undo();
+    change
+        .select(range)
+        .call(plugin.changes.splitListItem)
+        .undo();
 
     // TODO fix undo, and test selection
     // Back to previous cursor position
-    // expect(state.startBlock.text).toEqual(initialText);
-    // expect(state.selection.toJS()).toEqual(initialSelection.toJS());
+    // expect(value.startBlock.text).toEqual(initialText);
+    // expect(value.selection.toJS()).toEqual(initialSelection.toJS());
 
     return change;
-};
+}

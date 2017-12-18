@@ -1,16 +1,18 @@
-module.exports = function(plugin, change) {
-    const { state } = change;
-    const selectedBlock = state.document.getDescendant('_selection_key');
+export default function(plugin, change) {
+    const { value } = change;
+    const selectedBlock = value.document.getDescendant('_selection_key');
     change.collapseToStartOf(selectedBlock);
 
     plugin.onKeyDown(
         {
             key: 'Backspace',
             preventDefault: () => {},
-            stopPropagation: () => {}
+            stopPropagation: () => {},
+            key: 'Backspace'
         },
-        change
+        change,
+        {}
     );
 
     return change;
-};
+}
