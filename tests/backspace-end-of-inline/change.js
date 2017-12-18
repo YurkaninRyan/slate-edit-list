@@ -5,6 +5,7 @@ export default function(plugin, change) {
 
     plugin.onKeyDown(
         {
+            key: 'Backspace',
             preventDefault: () => {},
             stopPropagation: () => {},
             key: 'Backspace'
