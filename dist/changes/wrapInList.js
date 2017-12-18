@@ -18,18 +18,19 @@ function wrapInList(opts, change, type, data) {
     var selectedBlocks = getHighestSelectedBlocks(change.value);
     type = type || opts.types[0];
 
-    // Wrap in container
-    change.wrapBlock({
+    var wrapper = _slate.Block.create({
         type: type,
         data: _slate.Data.create(data)
-    }, { normalize: false });
+    });
 
-    var topLevelIndex = change.state.document.nodes.findIndex(function (node) {
+    var topLevelIndex = change.value.document.nodes.findIndex(function (node) {
         return node.key === selectedBlocks.get(0).key;
     });
-    change.insertNodeByKey(change.state.document.key, topLevelIndex, wrapper, { normalize: false });
+    change.insertNodeByKey(change.value.document.key, topLevelIndex, wrapper, {
+        normalize: false
+    });
     selectedBlocks.forEach(function (block) {
-        if (!change.state.document.getDescendant(block.key)) return;
+        if (!change.value.document.getDescendant(block.key)) return;
         change.removeNodeByKey(block.key, { normalize: false });
     });
 
@@ -38,7 +39,8 @@ function wrapInList(opts, change, type, data) {
     });
 
     // Wrap in list items
-    selectedBlocks.forEach(function (node) {
+    wrapper = change.value.document.getDescendant(wrapper.key);
+    wrapper.nodes.forEach(function (node) {
         if ((0, _utils.isList)(opts, node)) {
             // Merge its items with the created list
             node.nodes.forEach(function (_ref) {
@@ -46,9 +48,13 @@ function wrapInList(opts, change, type, data) {
                 return change.unwrapNodeByKey(key, { normalize: false });
             });
         } else {
-            change.wrapBlockByKey(node.key, opts.typeItem, {
-                normalize: false
-            });
+            if (node.kind === 'text') {
+                if (!change.value.document.getDescendant(node.key)) {
+                    return;
+                }
+                return change.removeTextByKey(node.key);
+            }
+            change.wrapBlockByKey(node.key, opts.typeItem);
         }
     });
 
@@ -59,9 +65,9 @@ function wrapInList(opts, change, type, data) {
  * Returns the highest list of blocks that cover the current selection
  */
 
-function getHighestSelectedBlocks(value) {
-    return (0, _immutable.List)(new Set(value.blocks.map(function (block) {
-        return value.document.getFurthestAncestor(block.key);
+function getHighestSelectedBlocks(state) {
+    return (0, _immutable.List)(new Set(state.blocks.map(function (block) {
+        return state.document.getFurthestAncestor(block.key);
     })));
 }
 
