@@ -1,33 +1,32 @@
-
 document:
   nodes:
-  - kind: block
-    type: ul_list
-    nodes:
-    - kind: block
-      type: list_item
+    - object: block
+      type: ul_list
       nodes:
-      - kind: block
-        type: paragraph
-        nodes:
-        - kind: text
-          leaves:
-            - text: 'First item'
+        - object: block
+          type: list_item
+          nodes:
+            - object: block
+              type: paragraph
+              nodes:
+                - object: text
+                  leaves:
+                    - text: "First item"
 
-    - kind: block
-      type: list_item
-      nodes:
-      - kind: block
-        type: paragraph
-        nodes:
-        - kind: text
-          key: 'start'
-          leaves:
-            - text: ''
+        - object: block
+          type: list_item
+          nodes:
+            - object: block
+              type: paragraph
+              nodes:
+                - object: text
+                  key: "start"
+                  leaves:
+                    - text: ""
 
 selection:
-  anchorKey: 'start'
+  anchorKey: "start"
   anchorOffset: 0
-  focusKey: 'start'
+  focusKey: "start"
   focusOffset: 0
   isFocused: true

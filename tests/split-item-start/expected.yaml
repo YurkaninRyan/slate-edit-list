@@ -1,23 +1,23 @@
 document:
   nodes:
-      - kind: block
-        type: ul_list
-        nodes:
-            - kind: block
-              type: list_item
+    - object: block
+      type: ul_list
+      nodes:
+        - object: block
+          type: list_item
+          nodes:
+            - object: block
+              type: paragraph
               nodes:
-                - kind: block
-                  type: paragraph
-                  nodes:
-                    - kind: text
-                      leaves:
-                        - text: ""
-            - kind: block
-              type: list_item
+                - object: text
+                  leaves:
+                    - text: ""
+        - object: block
+          type: list_item
+          nodes:
+            - object: block
+              type: paragraph
               nodes:
-                - kind: block
-                  type: paragraph
-                  nodes:
-                    - kind: text
-                      leaves:
-                        - text: Hello World
+                - object: text
+                  leaves:
+                    - text: Hello World

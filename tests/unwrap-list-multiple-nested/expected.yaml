@@ -1,49 +1,49 @@
 document:
   nodes:
-    - kind: block
+    - object: block
       type: paragraph
       nodes:
-      - kind: text
-        leaves:
-          - text: 'First item'
+        - object: text
+          leaves:
+            - text: "First item"
 
-    - kind: block
+    - object: block
       type: paragraph
       nodes:
-      - kind: text
-        leaves:
-          - text: 'Second item, with nested list'
-    - kind: block
+        - object: text
+          leaves:
+            - text: "Second item, with nested list"
+    - object: block
       type: ol_list
       nodes:
-      - kind: block
-        type: list_item
-        nodes:
-        - kind: block
-          type: paragraph
+        - object: block
+          type: list_item
           nodes:
-          - kind: text
-            leaves:
-              - text: 'First item in the nested list'
-      - kind: block
-        type: list_item
-        nodes:
-        - kind: block
-          type: paragraph
+            - object: block
+              type: paragraph
+              nodes:
+                - object: text
+                  leaves:
+                    - text: "First item in the nested list"
+        - object: block
+          type: list_item
           nodes:
-          - kind: text
-            leaves:
-              - text: 'Second item in the nested list'
+            - object: block
+              type: paragraph
+              nodes:
+                - object: text
+                  leaves:
+                    - text: "Second item in the nested list"
 
-    - kind: block
+    - object: block
       type: ul_list
       nodes:
-      - kind: block
-        type: list_item
-        nodes:
-        - kind: block
-          type: paragraph
+        - object: block
+          type: list_item
           nodes:
-          - kind: text
-            leaves:
-              - text: 'Third item'
+            - object: block
+              type: paragraph
+              nodes:
+                - object: text
+                  leaves:
+                    - text: "Third item"

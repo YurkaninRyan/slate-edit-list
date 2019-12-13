@@ -1,28 +1,28 @@
 document:
   nodes:
-    - kind: block
+    - object: block
       type: ul_list
       nodes:
-        - kind: block
+        - object: block
           type: ul_list
           nodes:
-            - kind: block
+            - object: block
               type: list_item
               nodes:
-                - kind: block
+                - object: block
                   type: list_item
                   nodes:
-                    - kind: block
+                    - object: block
                       type: paragraph
                       nodes:
-                        - kind: text
-                          key: 'start'
+                        - object: text
+                          key: "start"
                           leaves:
-                            - text: '1st item'
+                            - text: "1st item"
 
 selection:
-  anchorKey: 'start'
+  anchorKey: "start"
   anchorOffset: 2
-  focusKey: 'start'
+  focusKey: "start"
   focusOffset: 4
   isFocused: true
