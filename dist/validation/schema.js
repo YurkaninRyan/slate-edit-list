@@ -4,16 +4,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _defineProperty2 = require("babel-runtime/helpers/defineProperty");
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
 require("slate");
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Create a schema definition with rules to normalize lists
  */
 function schema(opts) {
   var constructedSchema = {
-    blocks: _defineProperty({}, opts.typeItem, {
+    blocks: (0, _defineProperty3.default)({}, opts.typeItem, {
       parent: { types: opts.types },
       nodes: [{ objects: ["block"] }],
 
@@ -50,6 +54,7 @@ function schema(opts) {
 /*
  * Allows to define a normalize function through a keyed collection of functions
  */
+
 function normalize(reasons) {
   return function (change, reason, context) {
     var reasonFn = reasons[reason];

@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _toConsumableArray2 = require('babel-runtime/helpers/toConsumableArray');
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _options = require('./options');
 
 var _options2 = _interopRequireDefault(_options);
@@ -15,8 +19,6 @@ var _changes = require('./changes');
 var _utils = require('./utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 /**
  * Returns the core of the plugin, limited to the validation and normalization
@@ -73,7 +75,7 @@ function bindAndScopeChange(opts, fn) {
         }
 
         // $FlowFixMe
-        return fn.apply(undefined, _toConsumableArray([opts, change].concat(args)));
+        return fn.apply(undefined, (0, _toConsumableArray3.default)([opts, change].concat(args)));
     };
 }
 

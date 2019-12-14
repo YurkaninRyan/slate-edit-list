@@ -4,11 +4,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _set = require("babel-runtime/core-js/set");
+
+var _set2 = _interopRequireDefault(_set);
+
 var _slate = require("slate");
 
 var _immutable = require("immutable");
 
 var _utils = require("../utils");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Wrap the blocks in the current selection in a new list. Selected
@@ -58,7 +64,7 @@ function wrapInList(opts, change, type, data) {
     }
   });
 
-  return change;
+  return change.normalize();
 }
 
 /**
@@ -66,7 +72,7 @@ function wrapInList(opts, change, type, data) {
  */
 
 function getHighestSelectedBlocks(state) {
-  return (0, _immutable.List)(new Set(state.blocks.map(function (block) {
+  return (0, _immutable.List)(new _set2.default(state.blocks.map(function (block) {
     return state.document.getFurthestAncestor(block.key);
   })));
 }
