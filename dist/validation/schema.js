@@ -6,19 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 require("slate");
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /**
  * Create a schema definition with rules to normalize lists
@@ -43,7 +31,7 @@ function schema(opts) {
   };
 
   // validate all list types, ensure they only have list item children
-  opts.types.forEach(function(type) {
+  opts.types.forEach(function (type) {
     constructedSchema.blocks[type] = {
       nodes: [{ types: [opts.typeItem] }],
       normalize: normalize({
@@ -63,7 +51,7 @@ function schema(opts) {
  * Allows to define a normalize function through a keyed collection of functions
  */
 function normalize(reasons) {
-  return function(change, reason, context) {
+  return function (change, reason, context) {
     var reasonFn = reasons[reason];
     if (reasonFn) {
       reasonFn(change, context);
@@ -83,7 +71,7 @@ function wrapChildrenInDefaultBlock(opts, change, node) {
   var wrapper = change.value.document.getDescendant(node.key).nodes.first();
 
   // Add in the remaining items
-  node.nodes.rest().forEach(function(child, index) {
+  node.nodes.rest().forEach(function (child, index) {
     return change.moveNodeByKey(child.key, wrapper.key, index + 1, {
       normalize: false
     });

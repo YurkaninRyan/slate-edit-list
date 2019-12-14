@@ -33,14 +33,11 @@ function increaseItemDepth(opts, change) {
  * Move the given item to the sublist at the end of destination item,
  * creating a sublist if needed.
  */
-function moveAsSubItem(
-  opts,
-  change,
-  // The list item to add
-  item,
-  // The key of the destination node
-  destKey
-) {
+function moveAsSubItem(opts, change,
+// The list item to add
+item,
+// The key of the destination node
+destKey) {
   var destination = change.value.document.getDescendant(destKey);
   var lastIndex = destination.nodes.size;
   var lastChild = destination.nodes.last();
@@ -49,10 +46,7 @@ function moveAsSubItem(
   var existingList = (0, _utils.isList)(opts, lastChild) ? lastChild : null;
 
   if (existingList) {
-    return change.moveNodeByKey(
-      item.key,
-      existingList.key,
-      existingList.nodes.size // as last item
+    return change.moveNodeByKey(item.key, existingList.key, existingList.nodes.size // as last item
     );
   }
   var currentList = (0, _utils.getListForItem)(opts, change.value, destination);

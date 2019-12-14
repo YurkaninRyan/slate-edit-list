@@ -34,11 +34,9 @@ function decreaseItemDepth(opts, change) {
   var parentItem = document.getParent(currentList.key);
   var parentList = document.getParent(parentItem.key);
   // The items following the item will be moved to a sublist of currentItem
-  var followingItems = currentList.nodes
-    .skipUntil(function(i) {
-      return i === currentItem;
-    })
-    .rest();
+  var followingItems = currentList.nodes.skipUntil(function (i) {
+    return i === currentItem;
+  }).rest();
 
   // True if the currentItem and the followingItems make the whole
   // currentList, and hence the currentList will be emptied
@@ -56,28 +54,16 @@ function decreaseItemDepth(opts, change) {
       normalize: false
     });
 
-    change.moveNodeByKey(
-      currentItem.key,
-      parentList.key,
-      parentList.nodes.indexOf(parentItem) + 1,
-      { normalize: false }
-    );
+    change.moveNodeByKey(currentItem.key, parentList.key, parentList.nodes.indexOf(parentItem) + 1, { normalize: false });
 
     // Move the followingItems to the sublist
-    followingItems.forEach(function(item, index) {
-      return change.moveNodeByKey(
-        item.key,
-        sublist.key,
-        sublist.nodes.size + index,
-        { normalize: false }
-      );
+    followingItems.forEach(function (item, index) {
+      return change.moveNodeByKey(item.key, sublist.key, sublist.nodes.size + index, {
+        normalize: false
+      });
     });
   } else {
-    change.moveNodeByKey(
-      currentItem.key,
-      parentList.key,
-      parentList.nodes.indexOf(parentItem) + 1
-    );
+    change.moveNodeByKey(currentItem.key, parentList.key, parentList.nodes.indexOf(parentItem) + 1);
   }
 
   // Remove the currentList completely if needed

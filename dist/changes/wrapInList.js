@@ -23,29 +23,27 @@ function wrapInList(opts, change, type, data) {
     data: _slate.Data.create(data)
   });
 
-  var topLevelIndex = change.value.document.nodes.findIndex(function(node) {
+  var topLevelIndex = change.value.document.nodes.findIndex(function (node) {
     return node.key === selectedBlocks.get(0).key;
   });
   change.insertNodeByKey(change.value.document.key, topLevelIndex, wrapper, {
     normalize: false
   });
-  selectedBlocks.forEach(function(block) {
+  selectedBlocks.forEach(function (block) {
     if (!change.value.document.getDescendant(block.key)) return;
     change.removeNodeByKey(block.key, { normalize: false });
   });
 
-  selectedBlocks.forEach(function(block, index) {
-    return change.insertNodeByKey(wrapper.key, index, block, {
-      normalize: false
-    });
+  selectedBlocks.forEach(function (block, index) {
+    return change.insertNodeByKey(wrapper.key, index, block, { normalize: false });
   });
 
   // Wrap in list items
   wrapper = change.value.document.getDescendant(wrapper.key);
-  wrapper.nodes.forEach(function(node) {
+  wrapper.nodes.forEach(function (node) {
     if ((0, _utils.isList)(opts, node)) {
       // Merge its items with the created list
-      node.nodes.forEach(function(_ref) {
+      node.nodes.forEach(function (_ref) {
         var key = _ref.key;
         return change.unwrapNodeByKey(key, { normalize: false });
       });
@@ -68,13 +66,9 @@ function wrapInList(opts, change, type, data) {
  */
 
 function getHighestSelectedBlocks(state) {
-  return (0, _immutable.List)(
-    new Set(
-      state.blocks.map(function(block) {
-        return state.document.getFurthestAncestor(block.key);
-      })
-    )
-  );
+  return (0, _immutable.List)(new Set(state.blocks.map(function (block) {
+    return state.document.getFurthestAncestor(block.key);
+  })));
 }
 
 exports.default = wrapInList;
