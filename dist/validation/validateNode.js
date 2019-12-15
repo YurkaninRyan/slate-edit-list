@@ -37,6 +37,7 @@ function joinAdjacentLists(opts, node) {
     if (!next || !(0, _utils.isList)(opts, next) || !opts.canMerge(child, next)) {
       return null;
     }
+
     return [child, next];
   }).filter(Boolean);
 
