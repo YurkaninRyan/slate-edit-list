@@ -7,7 +7,7 @@
   "main": "./dist/index.js",
   "peerDependencies": {
     "immutable": "^3.8.2 || ^4.0.0-rc.12",
-    "slate": "^0.32.0"
+    "slate": "^0.34.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -22,7 +22,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babelify": "^8.0.0",
     "browserify": "^13.3.0",
-    "eslint": "^4.15.0",
+    "eslint": "^5.0.0",
     "eslint-config-gitbook": "^4.0.0",
     "eslint-import-resolver-babel-module": "^4.0.0",
     "eslint-plugin-flowtype": "^2.48.0",
