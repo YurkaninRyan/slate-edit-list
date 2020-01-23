@@ -34,11 +34,9 @@ Useful transforms: see [Utilities and Transform](#utilities-and-transform).
 ### Simple Usage
 
 ```js
-import EditList from 'slate-edit-list'
+import EditList from "slate-edit-list";
 
-const plugins = [
-  EditList()
-]
+const plugins = [EditList()];
 ```
 
 #### Arguments
@@ -55,56 +53,55 @@ You can use this plugins with custom list block types (using plugin [arguments](
 
 Here is what a minimal list would look like:
 
-
 ```yaml
 nodes:
-    - kind: block
-      type: ul_list # Default type for bulleted lists container
-      nodes:
-          - kind: block
-            type: list_item # List containers can only contain list items
+  - object: block
+    type: ul_list # Default type for bulleted lists container
+    nodes:
+      - object: block
+        type: list_item # List containers can only contain list items
+        nodes:
+          # List items contain blocks. They cannot be the direct container of text.
+          - object: block
+            type: paragraph # Default type of blocks in a list item
             nodes:
-              # List items contain blocks. They cannot be the direct container of text.
-              - kind: block
-                type: paragraph # Default type of blocks in a list item
-                nodes:
-                  - kind: text
-                    text: Hello World
+              - object: text
+                text: Hello World
 ```
 
 And here is an example of a multi-level list:
 
 ```yaml
 nodes:
-  - kind: block
+  - object: block
     type: ol_list
     nodes:
-      - kind: block
+      - object: block
         type: list_item
         nodes:
-          - kind: block
+          - object: block
             type: paragraph
             nodes:
-              - kind: text
+              - object: text
                 text: Item 1
-          - kind: block
+          - object: block
             type: ol_list
             nodes:
-              - kind: block
+              - object: block
                 type: list_item
                 nodes:
-                  - kind: block
+                  - object: block
                     type: paragraph
                     nodes:
-                      - kind: text
+                      - object: text
                         text: Item 1.1
-              - kind: block
+              - object: block
                 type: list_item
                 nodes:
-                  - kind: block
+                  - object: block
                     type: paragraph
                     nodes:
-                      - kind: text
+                      - object: text
                         text: Item 1.2
 ```
 

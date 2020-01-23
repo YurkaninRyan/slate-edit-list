@@ -1,34 +1,50 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
-var _immutable = require('immutable');
+var _getPrototypeOf = require("babel-runtime/core-js/object/get-prototype-of");
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _possibleConstructorReturn2 = require("babel-runtime/helpers/possibleConstructorReturn");
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require("babel-runtime/helpers/inherits");
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+require("slate");
+
+var _immutable = require("immutable");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * The plugin options
  */
 var Options = function (_Record) {
-    _inherits(Options, _Record);
+  (0, _inherits3.default)(Options, _Record);
 
-    function Options() {
-        _classCallCheck(this, Options);
+  function Options() {
+    (0, _classCallCheck3.default)(this, Options);
+    return (0, _possibleConstructorReturn3.default)(this, (Options.__proto__ || (0, _getPrototypeOf2.default)(Options)).apply(this, arguments));
+  }
 
-        return _possibleConstructorReturn(this, (Options.__proto__ || Object.getPrototypeOf(Options)).apply(this, arguments));
-    }
-
-    return Options;
+  return Options;
 }((0, _immutable.Record)({
-    types: ['ul_list', 'ol_list'],
-    typeItem: 'list_item',
-    typeDefault: 'paragraph'
+  types: ["ul_list", "ol_list"],
+  typeItem: "list_item",
+  typeDefault: "paragraph",
+  canMerge: function canMerge(a, b) {
+    return a.type === b.type;
+  }
 }));
 
 exports.default = Options;
