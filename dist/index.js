@@ -4,7 +4,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
 
 var _options = require('./options');
 
@@ -19,6 +21,7 @@ var _core2 = _interopRequireDefault(_core);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var KEY_ENTER = 'Enter';
+
 var KEY_TAB = 'Tab';
 var KEY_BACKSPACE = 'Backspace';
 
@@ -31,7 +34,7 @@ function EditList() {
     opts = new _options2.default(opts);
     var corePlugin = (0, _core2.default)(opts);
 
-    return _extends({}, corePlugin, {
+    return (0, _extends3.default)({}, corePlugin, {
 
         onKeyDown: onKeyDown.bind(null, opts)
     });
